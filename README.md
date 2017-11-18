@@ -3,6 +3,7 @@ DAPLink is firmware that runs on a microcontroller that is connected according t
 * MSC - drag-n-drop programming flash memory
 * CDC - virtual com port for log, trace and terminal emulation
 * HID - CMSIS-DAP compliant debug channel
+* WebUSB HID - CMSIS-DAP compliant debug channel
 
 For more detailed usability information [see the users guide.](docs/USERS-GUIDE.md)
 
