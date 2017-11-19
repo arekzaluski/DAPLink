@@ -554,11 +554,11 @@ __task void USBD_RTX_HID_WEBUSB_EP_INTOUT_Event(void)
 
 __task void USBD_RTX_HID_EP_INT_Event(void)
 {
-    LastWasWebUsbHid = __FALSE;
+     LastWasSpoofed = __FALSE;
 
     for (;;) {
         usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
-        USBD_HID_EP_INT_Event(usbd_os_evt_get());
+        USBD_HID_EP_INT_Event(usbd_os_evt_get() & (~1));
     }
 }
 

@@ -1,6 +1,6 @@
 /**
- * @file    usbd_core_winusb.c
- * @brief   WinUSB Device driver
+ * @file    usbd_core_webusb.c
+ * @brief   WebUSB Device driver
  *
  * DAPLink Interface Firmware
  * Copyright (c) 2009-2016, ARM Limited, All Rights Reserved
@@ -26,23 +26,47 @@
 #include "usb_for_lib.h"
 
 /*
- *  USB Device Endpoint 0 Event Callback - WinUSB specific handling (Setup Request To Device)
+ *  USB Device Endpoint 0 Event Callback - WebUSB specific handling (Setup Request To Device)
  *    Parameters:      none
  *    Return Value:    TRUE - Setup vendor request ok, FALSE - Setup vendor request not supported
  */
 
-__weak BOOL USBD_EndPoint0_Setup_WinUSB_ReqToDevice(void)
+__weak BOOL USBD_EndPoint0_Setup_WebUSB_ReqToDevice(void)
 {
     U8  *pD;
-    U32 len;
+    U32 len, n;
 
     BOOL success = (__FALSE);
-    if (USBD_SetupPacket.bRequest == usbd_winusb_vendor_code) {			/* vendor code correct? */
+    if (USBD_SetupPacket.bRequest == usbd_webusb_vendor_code) {			/* vendor code correct? */
         switch (USBD_SetupPacket.wIndex) {
-            case WINUSB_REQUEST_GET_DESCRIPTOR_SET:
-                pD = (U8 *)USBD_WinUSBDescriptorSetDescriptor;
+            case WEBUSB_REQUEST_GET_ALLOWED_ORIGINS:
+                pD = (U8 *)USBD_WebUSBAllowedOriginsHeader;
                 USBD_EP0Data.pData = pD;
-                len = ((WINUSB_DESCRIPTOR_SET_HEADER *)pD)->wTotalLength;
+                len = ((WEBUSB_ALLOWED_ORIGINS_HEADER_DESCRIPTOR *)pD)->wTotalLength;
+                success = (__TRUE);
+                break;
+
+            case WEBUSB_REQUEST_GET_URL:
+                pD = (U8 *)USBD_WebUSBURLDescriptor;
+                if (USBD_SetupPacket.wValueL == 0) {
+                    success = (__FALSE);
+                    break;
+                }
+
+                for (n = 0; n + 1 < USBD_SetupPacket.wValueL; n++) {
+                    if (((WEBUSB_URL_DESCRIPTOR *)pD)->bLength != 0) {
+                        pD += ((WEBUSB_URL_DESCRIPTOR *)pD)->bLength;
+                    }
+                }
+
+                if (((WEBUSB_URL_DESCRIPTOR *)pD)->bLength == 0) {
+                    success = (__FALSE);
+                    break;
+                }
+
+                USBD_EP0Data.pData = pD;
+                len = ((WEBUSB_URL_DESCRIPTOR *)pD)->bLength;
+
                 success = (__TRUE);
                 break;
 
