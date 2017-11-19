@@ -694,18 +694,6 @@ BOOL USBD_EndPoint0_Out_HID_ReqToIF(void)
 #endif
 #endif
 #else
-BOOL USBD_ReqGetDescriptor_HID(U8 **pD, U32 *len)
-{
-    return (__FALSE);
-}
-BOOL USBD_EndPoint0_Setup_HID_ReqToIF(void)
-{
-    return (__FALSE);
-}
-BOOL USBD_EndPoint0_Out_HID_ReqToIF(void)
-{
-    return (__FALSE);
-}
 #endif  /* (USBD_HID_WEBUSB_ENABLE) */
 
 #if    (USBD_MSC_ENABLE)
@@ -2559,12 +2547,7 @@ const U8 USBD_ConfigDescriptor_HS[] = {
 #endif
 
 #if (USBD_HID_WEBUSB_ENABLE)
-HID_WEBUSB_DESC
- #if (USBD_HID_EP_INTOUT != 0)
- HID_WEBUSB_EP_INOUT_HS
- #else
- HID_WEBUSB_EP_HS
- #endif
+	HID_WEBUSB_DESC
 #endif
 
 #if (USBD_CDC_ACM_ENABLE)
@@ -2624,12 +2607,7 @@ const U8 USBD_OtherSpeedConfigDescriptor[] = {
 #endif
 
 #if (USBD_HID_WEBUSB_ENABLE)
-HID_WEBUSB_DESC
- #if (USBD_HID_EP_INTOUT != 0)
- HID_WEBUSB_EP_INOUT_HS
- #else
- HID_WEBUSB_EP_HS
- #endif
+	HID_WEBUSB_DESC
 #endif
 
 #if (USBD_MSC_ENABLE)
@@ -2685,12 +2663,12 @@ const U8 USBD_OtherSpeedConfigDescriptor_HS[] = {
 #endif
 
 #if (USBD_HID_WEBUSB_ENABLE)
-HID_WEBUSB_DESC
- #if (USBD_HID_EP_INTOUT != 0)
-HID_WEBUSB_EP_INOUT
- #else
-HID_WEBUSB_EP
- #endif
+	HID_WEBUSB_DESC
+ 	#if (USBD_HID_EP_INTOUT != 0)
+		HID_WEBUSB_EP_INOUT
+ 	#else
+		HID_WEBUSB_EP
+ 	#endif
 #endif
 
 #if (USBD_MSC_ENABLE)

@@ -149,8 +149,16 @@
 #endif
 
 #define USBD_HID_ENABLE             HID_ENDPOINT
-#define USBD_HID_EP_INTIN           1
-#define USBD_HID_EP_INTOUT          1
+#define USBD_HID_WEBUSB_ENABLE      WEBUSB_HID_ENDPOINT
+#define USBD_HID_EP_INTIN           5
+#define USBD_HID_EP_INTOUT          5
+
+#if WEBUSB_HID_ENDPOINT
+// Pick a unique endpoint for the webusb HID IF.
+#define USBD_HID_WEBUSB_EP_INTIN     1
+#define USBD_HID_WEBUSB_EP_INTOUT    1
+#endif
+
 #define USBD_HID_EP_INTIN_STACK     0
 #define USBD_HID_WMAXPACKETSIZE     64
 #define USBD_HID_BINTERVAL          1
@@ -165,11 +173,6 @@
 #define USBD_HID_OUTREPORT_MAX_SZ   64
 #define USBD_HID_FEATREPORT_MAX_SZ  1
 #define USBD_HID_WEBUSB_ENABLE      WEBUSB_HID_ENDPOINT
-
-#if WEBUSB_HID_ENDPOINT
-#define USBD_HID_WEBUSB_EP_INTIN    5
-#define USBD_HID_WEBUSB_EP_INTOUT   5
-#endif
 
 //     <e0.0> Mass Storage Device (MSC)
 //       <i> Enable class support for Mass Storage Device (MSC)
