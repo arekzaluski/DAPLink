@@ -32,7 +32,6 @@ BOOL DataOutAsyncReq;
 U32 DataOutUpdateReqMask;
 U8 *ptrDataOut;
 volatile U16 DataOutToSendLen;
-volatile BOOL LastWasWebusb;
 U16 DataOutSentLen;
 BOOL DataOutEndWithShortPacket;
 
@@ -273,15 +272,7 @@ void USBD_HID_EP_INTIN_Event(U32 event)
         if (bytes_to_send > usbd_hid_maxpacketsize[USBD_HighSpeed]) {
             bytes_to_send = usbd_hid_maxpacketsize[USBD_HighSpeed];
         }
-
-        // Write the data to the endpoint selected depending on the event parameter.
-        // 0: normal HID, 1: WebUSB HID
-        if (LastWasWebusb) {
-            USBD_WriteEP(usbd_hid_webusb_ep_intin | 0x80, ptrDataOut, bytes_to_send);
-        } else {
-            USBD_WriteEP(usbd_hid_ep_intin | 0x80, ptrDataOut, bytes_to_send);
-        }
-
+        USBD_WriteEP(usbd_hid_ep_intin | 0x80, ptrDataOut, bytes_to_send);
         ptrDataOut     += bytes_to_send;
         DataOutSentLen += bytes_to_send;
 
@@ -294,7 +285,6 @@ void USBD_HID_EP_INTIN_Event(U32 event)
         }
     }
 }
-
 
 /*
  *  USB Device HID Interrupt Out Endpoint Event Callback
@@ -311,14 +301,7 @@ void USBD_HID_EP_INTOUT_Event(U32 event)
         DataInReceMax = usbd_hid_outreport_max_sz;
         DataInReceLen = 0;
     }
-
-    // Use parameter event to distinguish between the real HID interface and the WebUSB one.
-    if (LastWasWebusb) {
-       bytes_rece = USBD_ReadEP(usbd_hid_webusb_ep_intout, ptrDataIn, DataInReceMax - DataInReceLen);
-    } else {
-        bytes_rece = USBD_ReadEP(usbd_hid_ep_intout, ptrDataIn, DataInReceMax - DataInReceLen);
-    }
-
+    bytes_rece = USBD_ReadEP(usbd_hid_ep_intout, ptrDataIn, DataInReceMax - DataInReceLen);
     ptrDataIn      += bytes_rece;
     DataInReceLen  += bytes_rece;
 
@@ -335,7 +318,6 @@ void USBD_HID_EP_INTOUT_Event(U32 event)
     }
 }
 
-
 /*
  *  USB Device HID Configure Callback
  *    Parameters:      None
@@ -350,7 +332,6 @@ void USBD_HID_Configure_Event(void)
     DataOutUpdateReqMask      = __FALSE;
     ptrDataOut                = NULL;
     DataOutToSendLen          = 0;
-    LastWasWebusb             = __FALSE;
     DataOutSentLen            = 0;
     DataOutEndWithShortPacket = __FALSE;
     ptrDataIn                 = NULL;
@@ -371,8 +352,6 @@ void USBD_HID_Configure_Event(void)
 
 void USBD_HID_EP_INT_Event(U32 event)
 {
-    LastWasWebusb = __FALSE;
-
     if (event & USBD_EVT_IN) {
         USBD_HID_EP_INTIN_Event(event);
     }
@@ -381,20 +360,6 @@ void USBD_HID_EP_INT_Event(U32 event)
         USBD_HID_EP_INTOUT_Event(event);
     }
 }
-
-void USBD_HID_WEBUSB_EP_INT_Event(U32 event)
-{
-    LastWasWebusb = __TRUE;
-
-    if (event & USBD_EVT_IN) {
-        USBD_HID_EP_INTIN_Event(event);
-    }
-
-    if (event & USBD_EVT_OUT) {
-        USBD_HID_EP_INTOUT_Event(event);
-    }
-}
-
 
 /*
  *  USB Device HID SOF Handler (handles report timings: polling and idle times)
@@ -492,8 +457,7 @@ void USBD_HID_SOF_Event(void)
 
 __task void USBD_RTX_HID_EP_INTIN_Event(void)
 {
-    LastWasWebusb = __FALSE;
-	
+    
     for (;;) {
         usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
 
@@ -503,20 +467,6 @@ __task void USBD_RTX_HID_EP_INTIN_Event(void)
     }
 }
 
-__task void USBD_RTX_HID_WEBUSB_EP_INTIN_Event(void)
-{
-    LastWasWebusb = __TRUE;
-	
-    for (;;) {
-        usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
-
-        if (usbd_os_evt_get() & USBD_EVT_IN) {
-            USBD_HID_EP_INTIN_Event(1);
-        }
-    }
-}
-
-
 /*
  *  USB Device HID Interrupt Out Endpoint Event Handler Task
  *    Parameters:      None
@@ -525,7 +475,6 @@ __task void USBD_RTX_HID_WEBUSB_EP_INTIN_Event(void)
 
 __task void USBD_RTX_HID_EP_INTOUT_Event(void)
 {
-    LastWasWebusb = __FALSE;
 
     for (;;) {
         usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
@@ -536,20 +485,6 @@ __task void USBD_RTX_HID_EP_INTOUT_Event(void)
     }
 }
 
-__task void USBD_RTX_HID_WEBUSB_EP_INTOUT_Event(void)
-{
-    LastWasWebusb = __TRUE;
-
-    for (;;) {
-        usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
-
-        if (usbd_os_evt_get() & USBD_EVT_OUT) {
-            USBD_HID_EP_INTOUT_Event(1);
-        }
-    }
-}
-
-
 /*
  *  USB Device HID Interrupt In/Out Endpoint Event Handler Task
  *    Parameters:      None
@@ -558,7 +493,6 @@ __task void USBD_RTX_HID_WEBUSB_EP_INTOUT_Event(void)
 
 __task void USBD_RTX_HID_EP_INT_Event(void)
 {
-    LastWasWebusb = __FALSE;
 
     for (;;) {
         usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
@@ -566,15 +500,6 @@ __task void USBD_RTX_HID_EP_INT_Event(void)
     }
 }
 
-__task void USBD_RTX_HID_WEBUSB_EP_INT_Event(void)
-{
-    LastWasWebusb = __TRUE;
-
-    for (;;) {
-        usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
-        USBD_HID_EP_INT_Event(usbd_os_evt_get() | 1);
-    }
-}
 #endif
 
 

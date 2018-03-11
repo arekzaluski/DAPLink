@@ -66,11 +66,8 @@ const U8 usbd_max_packet0 = USBD_MAX_PACKET0;
 
 #if    (USBD_HID_ENABLE)
 const U8 usbd_hid_if_num = USBD_HID_IF_NUM;
-const U8 usbd_hid_webusb_if_num = USBD_HID_WEBUSB_IF_NUM;
 const U8 usbd_hid_ep_intin = USBD_HID_EP_INTIN;
-const U8 usbd_hid_webusb_ep_intin = USBD_HID_WEBUSB_EP_INTIN;
 const U8 usbd_hid_ep_intout = USBD_HID_EP_INTOUT;
-const U8 usbd_hid_webusb_ep_intout = USBD_HID_WEBUSB_EP_INTOUT;
 const U16 usbd_hid_interval[2]  = {USBD_HID_INTERVAL, USBD_HID_HS_INTERVAL};
 const U16 usbd_hid_maxpacketsize[2] = {USBD_HID_WMAXPACKETSIZE, USBD_HID_HS_WMAXPACKETSIZE};
 const U8 usbd_hid_inreport_num = USBD_HID_INREPORT_NUM;
@@ -425,288 +422,15 @@ BOOL USBD_EndPoint0_Setup_HID_ReqToIF(void)
 {
     return (__FALSE);
 }
+BOOL USBD_EndPoint0_Setup_WEBUSB_ReqToIF(void)
+{
+    return (__FALSE);
+}
 BOOL USBD_EndPoint0_Out_HID_ReqToIF(void)
 {
     return (__FALSE);
 }
 #endif  /* (USBD_HID_ENABLE) */
-
-#if    (USBD_HID_WEBUSB_ENABLE)
-#ifdef __RTX
-#if   ((USBD_HID_WEBUSB_EP_INTOUT != 0) && (USBD_HID_WEBUSB_EP_INTIN != USBD_HID_WEBUSB_EP_INTOUT))
-#if    (USBD_HID_WEBUSB_EP_INTIN == 1)
-#define USBD_RTX_EndPoint1             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 2)
-#define USBD_RTX_EndPoint2             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 3)
-#define USBD_RTX_EndPoint3             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 4)
-#define USBD_RTX_EndPoint4             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 5)
-#define USBD_RTX_EndPoint5             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 6)
-#define USBD_RTX_EndPoint6             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 7)
-#define USBD_RTX_EndPoint7             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 8)
-#define USBD_RTX_EndPoint8             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 9)
-#define USBD_RTX_EndPoint9             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 10)
-#define USBD_RTX_EndPoint10            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 11)
-#define USBD_RTX_EndPoint11            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 12)
-#define USBD_RTX_EndPoint12            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 13)
-#define USBD_RTX_EndPoint13            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 14)
-#define USBD_RTX_EndPoint14            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 15)
-#define USBD_RTX_EndPoint15            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#endif
-
-#if    (USBD_HID_WEBUSB_EP_INTOUT == 1)
-#define USBD_RTX_EndPoint1             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 2)
-#define USBD_RTX_EndPoint2             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 3)
-#define USBD_RTX_EndPoint3             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 4)
-#define USBD_RTX_EndPoint4             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 5)
-#define USBD_RTX_EndPoint5             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 6)
-#define USBD_RTX_EndPoint6             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 7)
-#define USBD_RTX_EndPoint7             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 8)
-#define USBD_RTX_EndPoint8             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 9)
-#define USBD_RTX_EndPoint9             USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 10)
-#define USBD_RTX_EndPoint10            USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 11)
-#define USBD_RTX_EndPoint11            USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 12)
-#define USBD_RTX_EndPoint12            USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 13)
-#define USBD_RTX_EndPoint13            USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 14)
-#define USBD_RTX_EndPoint14            USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 15)
-#define USBD_RTX_EndPoint15            USBD_RTX_HID_WEBUSB_EP_INTOUT_Event
-#endif
-#elif    (USBD_HID_WEBUSB_EP_INTOUT != 0)
-#if    (USBD_HID_WEBUSB_EP_INTIN == 1)
-#define USBD_RTX_EndPoint1             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 2)
-#define USBD_RTX_EndPoint2             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 3)
-#define USBD_RTX_EndPoint3             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 4)
-#define USBD_RTX_EndPoint4             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 5)
-#define USBD_RTX_EndPoint5             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 6)
-#define USBD_RTX_EndPoint6             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 7)
-#define USBD_RTX_EndPoint7             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 8)
-#define USBD_RTX_EndPoint8             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 9)
-#define USBD_RTX_EndPoint9             USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 10)
-#define USBD_RTX_EndPoint10            USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 11)
-#define USBD_RTX_EndPoint11            USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 12)
-#define USBD_RTX_EndPoint12            USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 13)
-#define USBD_RTX_EndPoint13            USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 14)
-#define USBD_RTX_EndPoint14            USBD_RTX_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 15)
-#define USBD_RTX_EndPoint15            USBD_RTX_HID_WEBUSB_EP_INT_Event
-#endif
-#else
-#if    (USBD_HID_WEBUSB_EP_INTIN == 1)
-#define USBD_RTX_EndPoint1             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 2)
-#define USBD_RTX_EndPoint2             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 3)
-#define USBD_RTX_EndPoint3             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 4)
-#define USBD_RTX_EndPoint4             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 5)
-#define USBD_RTX_EndPoint5             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 6)
-#define USBD_RTX_EndPoint6             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 7)
-#define USBD_RTX_EndPoint7             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 8)
-#define USBD_RTX_EndPoint8             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 9)
-#define USBD_RTX_EndPoint9             USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 10)
-#define USBD_RTX_EndPoint10            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 11)
-#define USBD_RTX_EndPoint11            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 12)
-#define USBD_RTX_EndPoint12            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 13)
-#define USBD_RTX_EndPoint13            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 14)
-#define USBD_RTX_EndPoint14            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 15)
-#define USBD_RTX_EndPoint15            USBD_RTX_HID_WEBUSB_EP_INTIN_Event
-#endif
-#endif
-#else
-#if   ((USBD_HID_WEBUSB_EP_INTOUT != 0) && (USBD_HID_WEBUSB_EP_INTIN != USBD_HID_WEBUSB_EP_INTOUT))
-#if    (USBD_HID_WEBUSB_EP_INTIN == 1)
-#define USBD_EndPoint1                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 2)
-#define USBD_EndPoint2                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 3)
-#define USBD_EndPoint3                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 4)
-#define USBD_EndPoint4                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 5)
-#define USBD_EndPoint5                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 6)
-#define USBD_EndPoint6                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 7)
-#define USBD_EndPoint7                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 8)
-#define USBD_EndPoint8                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 9)
-#define USBD_EndPoint9                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 10)
-#define USBD_EndPoint10                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 11)
-#define USBD_EndPoint11                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 12)
-#define USBD_EndPoint12                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 13)
-#define USBD_EndPoint13                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 14)
-#define USBD_EndPoint14                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 15)
-#define USBD_EndPoint15                USBD_HID_WEBUSB_EP_INTIN_Event
-#endif
-
-#if    (USBD_HID_WEBUSB_EP_INTOUT == 1)
-#define USBD_EndPoint1                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 2)
-#define USBD_EndPoint2                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 3)
-#define USBD_EndPoint3                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 4)
-#define USBD_EndPoint4                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 5)
-#define USBD_EndPoint5                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 6)
-#define USBD_EndPoint6                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 7)
-#define USBD_EndPoint7                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 8)
-#define USBD_EndPoint8                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 9)
-#define USBD_EndPoint9                 USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 10)
-#define USBD_EndPoint10                USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 11)
-#define USBD_EndPoint11                USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 12)
-#define USBD_EndPoint12                USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 13)
-#define USBD_EndPoint13                USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 14)
-#define USBD_EndPoint14                USBD_HID_WEBUSB_EP_INTOUT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTOUT == 15)
-#define USBD_EndPoint15                USBD_HID_WEBUSB_EP_INTOUT_Event
-#endif
-#elif    (USBD_HID_WEBUSB_EP_INTOUT != 0)
-#if    (USBD_HID_WEBUSB_EP_INTIN == 1)
-#define USBD_EndPoint1                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 2)
-#define USBD_EndPoint2                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 3)
-#define USBD_EndPoint3                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 4)
-#define USBD_EndPoint4                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 5)
-#define USBD_EndPoint5                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 6)
-#define USBD_EndPoint6                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 7)
-#define USBD_EndPoint7                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 8)
-#define USBD_EndPoint8                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 9)
-#define USBD_EndPoint9                 USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 10)
-#define USBD_EndPoint10                USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 11)
-#define USBD_EndPoint11                USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 12)
-#define USBD_EndPoint12                USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 13)
-#define USBD_EndPoint13                USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 14)
-#define USBD_EndPoint14                USBD_HID_WEBUSB_EP_INT_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 15)
-#define USBD_EndPoint15                USBD_HID_WEBUSB_EP_INT_Event
-#endif
-#else
-#if    (USBD_HID_WEBUSB_EP_INTIN == 1)
-#define USBD_EndPoint1                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 2)
-#define USBD_EndPoint2                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 3)
-#define USBD_EndPoint3                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 4)
-#define USBD_EndPoint4                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 5)
-#define USBD_EndPoint5                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 6)
-#define USBD_EndPoint6                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 7)
-#define USBD_EndPoint7                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 8)
-#define USBD_EndPoint8                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 9)
-#define USBD_EndPoint9                 USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 10)
-#define USBD_EndPoint10                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 11)
-#define USBD_EndPoint11                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 12)
-#define USBD_EndPoint12                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 13)
-#define USBD_EndPoint13                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 14)
-#define USBD_EndPoint14                USBD_HID_WEBUSB_EP_INTIN_Event
-#elif  (USBD_HID_WEBUSB_EP_INTIN == 15)
-#define USBD_EndPoint15                USBD_HID_WEBUSB_EP_INTIN_Event
-#endif
-#endif
-#endif
-#else
-BOOL USBD_ReqGetDescriptor_HID(U8 **pD, U32 *len)
-{
-    return (__FALSE);
-}
-BOOL USBD_EndPoint0_Setup_HID_ReqToIF(void)
-{
-    return (__FALSE);
-}
-BOOL USBD_EndPoint0_Out_HID_ReqToIF(void)
-{
-    return (__FALSE);
-}
-#endif  /* (USBD_HID_WEBUSB_ENABLE) */
 
 #if    (USBD_MSC_ENABLE)
 #ifdef __RTX
@@ -2065,7 +1789,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
   USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */                                               \
   USBD_HID_WEBUSB_IF_NUM,                /* bInterfaceNumber */                                              \
   0x00,                                 /* bAlternateSetting */                                             \
-  0x01+(USBD_HID_WEBUSB_EP_INTOUT != 0),       /* bNumEndpoints */                                                 \
+  0x01+(USBD_HID_EP_INTOUT != 0),       /* bNumEndpoints */                                                 \
   USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceClass */                                               \
   USB_DEVICE_CLASS_HUMAN_INTERFACE,     /* bInterfaceSubClass */                                            \
   HID_PROTOCOL_NONE,                    /* bInterfaceProtocol */                                            \
@@ -2101,7 +1825,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
 /* Endpoint, HID Interrupt In */                                                                            \
   USB_ENDPOINT_DESC_SIZE,               /* bLength */                                                       \
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */                                               \
-  USB_ENDPOINT_IN(USBD_HID_WEBUSB_EP_INTIN),   /* bEndpointAddress */                                              \
+  USB_ENDPOINT_IN(USBD_HID_EP_INTIN),   /* bEndpointAddress */                                              \
   USB_ENDPOINT_TYPE_INTERRUPT,          /* bmAttributes */                                                  \
   WBVAL(USBD_HID_WMAXPACKETSIZE),       /* wMaxPacketSize */                                                \
   USBD_HID_BINTERVAL,                   /* bInterval */
@@ -2110,7 +1834,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
 /* Endpoint, HID Interrupt In */                                                                            \
   USB_ENDPOINT_DESC_SIZE,               /* bLength */                                                       \
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */                                               \
-  USB_ENDPOINT_IN(USBD_HID_WEBUSB_EP_INTIN),   /* bEndpointAddress */                                              \
+  USB_ENDPOINT_IN(USBD_HID_EP_INTIN),   /* bEndpointAddress */                                              \
   USB_ENDPOINT_TYPE_INTERRUPT,          /* bmAttributes */                                                  \
   WBVAL(USBD_HID_WMAXPACKETSIZE),       /* wMaxPacketSize */                                                \
   USBD_HID_BINTERVAL,                   /* bInterval */                                                     \
@@ -2118,7 +1842,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
 /* Endpoint, HID Interrupt Out */                                                                           \
   USB_ENDPOINT_DESC_SIZE,               /* bLength */                                                       \
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */                                               \
-  USB_ENDPOINT_OUT(USBD_HID_WEBUSB_EP_INTOUT), /* bEndpointAddress */                                              \
+  USB_ENDPOINT_OUT(USBD_HID_EP_INTOUT), /* bEndpointAddress */                                              \
   USB_ENDPOINT_TYPE_INTERRUPT,          /* bmAttributes */                                                  \
   WBVAL(USBD_HID_WMAXPACKETSIZE),       /* wMaxPacketSize */                                                \
   USBD_HID_BINTERVAL,                   /* bInterval */

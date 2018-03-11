@@ -27,6 +27,7 @@
 
 extern BOOL USBD_ReqGetDescriptor_HID(U8 **pD, U32 *len);
 extern BOOL USBD_EndPoint0_Setup_HID_ReqToIF(void);
+extern BOOL USBD_EndPoint0_Setup_WEBUSB_ReqToIF(void);
 extern BOOL USBD_EndPoint0_Out_HID_ReqToIF(void);
 
 
