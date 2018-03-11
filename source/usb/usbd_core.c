@@ -894,6 +894,9 @@ void USBD_EndPoint0(U32 event)
             case REQUEST_CLASS:
                 switch (USBD_SetupPacket.bmRequestType.Recipient) {
                     case REQUEST_TO_DEVICE:
+                        if (USBD_EndPoint0_Setup_HID_ReqToIF()) {
+                            goto setup_class_ok;
+                        }
                         goto stall;                                                  /* not supported */
 
                     case REQUEST_TO_INTERFACE:
@@ -975,6 +978,9 @@ stall:
                         case REQUEST_CLASS:
                             switch (USBD_SetupPacket.bmRequestType.Recipient) {
                                 case REQUEST_TO_DEVICE:
+                                    if (USBD_EndPoint0_Out_HID_ReqToIF()) {
+                                        goto out_class_ok;
+                                    }
                                     goto stall_i;                                          /* not supported */
 
                                 case REQUEST_TO_INTERFACE:
