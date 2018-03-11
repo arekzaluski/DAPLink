@@ -66,8 +66,11 @@ const U8 usbd_max_packet0 = USBD_MAX_PACKET0;
 
 #if    (USBD_HID_ENABLE)
 const U8 usbd_hid_if_num = USBD_HID_IF_NUM;
+const U8 usbd_hid_webusb_if_num = USBD_HID_WEBUSB_IF_NUM;
 const U8 usbd_hid_ep_intin = USBD_HID_EP_INTIN;
+const U8 usbd_hid_webusb_ep_intin = USBD_HID_WEBUSB_EP_INTIN;
 const U8 usbd_hid_ep_intout = USBD_HID_EP_INTOUT;
+const U8 usbd_hid_webusb_ep_intout = USBD_HID_WEBUSB_EP_INTOUT;
 const U16 usbd_hid_interval[2]  = {USBD_HID_INTERVAL, USBD_HID_HS_INTERVAL};
 const U16 usbd_hid_maxpacketsize[2] = {USBD_HID_WMAXPACKETSIZE, USBD_HID_HS_WMAXPACKETSIZE};
 const U8 usbd_hid_inreport_num = USBD_HID_INREPORT_NUM;
@@ -1789,7 +1792,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
   USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */                                               \
   USBD_HID_WEBUSB_IF_NUM,                /* bInterfaceNumber */                                              \
   0x00,                                 /* bAlternateSetting */                                             \
-  0x01+(USBD_HID_EP_INTOUT != 0),       /* bNumEndpoints */                                                 \
+  0x01+(USBD_HID_WEBUSB_EP_INTOUT != 0),       /* bNumEndpoints */                                                 \
   USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceClass */                                               \
   USB_DEVICE_CLASS_HUMAN_INTERFACE,     /* bInterfaceSubClass */                                            \
   HID_PROTOCOL_NONE,                    /* bInterfaceProtocol */                                            \
@@ -1825,7 +1828,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
 /* Endpoint, HID Interrupt In */                                                                            \
   USB_ENDPOINT_DESC_SIZE,               /* bLength */                                                       \
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */                                               \
-  USB_ENDPOINT_IN(USBD_HID_EP_INTIN),   /* bEndpointAddress */                                              \
+  USB_ENDPOINT_IN(USBD_HID_WEBUSB_EP_INTIN),   /* bEndpointAddress */                                              \
   USB_ENDPOINT_TYPE_INTERRUPT,          /* bmAttributes */                                                  \
   WBVAL(USBD_HID_WMAXPACKETSIZE),       /* wMaxPacketSize */                                                \
   USBD_HID_BINTERVAL,                   /* bInterval */
@@ -1834,7 +1837,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
 /* Endpoint, HID Interrupt In */                                                                            \
   USB_ENDPOINT_DESC_SIZE,               /* bLength */                                                       \
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */                                               \
-  USB_ENDPOINT_IN(USBD_HID_EP_INTIN),   /* bEndpointAddress */                                              \
+  USB_ENDPOINT_IN(USBD_HID_WEBUSB_EP_INTIN),   /* bEndpointAddress */                                              \
   USB_ENDPOINT_TYPE_INTERRUPT,          /* bmAttributes */                                                  \
   WBVAL(USBD_HID_WMAXPACKETSIZE),       /* wMaxPacketSize */                                                \
   USBD_HID_BINTERVAL,                   /* bInterval */                                                     \
@@ -1842,7 +1845,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
 /* Endpoint, HID Interrupt Out */                                                                           \
   USB_ENDPOINT_DESC_SIZE,               /* bLength */                                                       \
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */                                               \
-  USB_ENDPOINT_OUT(USBD_HID_EP_INTOUT), /* bEndpointAddress */                                              \
+  USB_ENDPOINT_OUT(USBD_HID_WEBUSB_EP_INTOUT), /* bEndpointAddress */                                              \
   USB_ENDPOINT_TYPE_INTERRUPT,          /* bmAttributes */                                                  \
   WBVAL(USBD_HID_WMAXPACKETSIZE),       /* wMaxPacketSize */                                                \
   USBD_HID_BINTERVAL,                   /* bInterval */

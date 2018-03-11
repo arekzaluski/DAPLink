@@ -149,8 +149,8 @@
 
 #define USBD_HID_ENABLE             HID_ENDPOINT
 #define USBD_HID_WEBUSB_ENABLE      WEBUSB_HID_ENDPOINT
-#define USBD_HID_EP_INTIN           5
-#define USBD_HID_EP_INTOUT          5
+#define USBD_HID_EP_INTIN           1
+#define USBD_HID_EP_INTOUT          1
 
 #if WEBUSB_HID_ENDPOINT
 // Pick a unique endpoint for the WEBUSB HID IF.
