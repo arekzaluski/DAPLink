@@ -900,10 +900,6 @@ void USBD_EndPoint0(U32 event)
                         goto stall;                                                  /* not supported */
 
                     case REQUEST_TO_INTERFACE:
-                        //if (USBD_EndPoint0_Setup_WEBUSB_ReqToIF()) {
-                        //    goto setup_class_ok;
-                        //}
-
                         if (USBD_EndPoint0_Setup_HID_ReqToIF()) {
                             goto setup_class_ok;
                         }
