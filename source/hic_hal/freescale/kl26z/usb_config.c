@@ -136,7 +136,6 @@
 #else
 #define HID_ENDPOINT 1
 #endif
-
 #define USBD_HID_ENABLE             HID_ENDPOINT
 #define USBD_HID_EP_INTIN           1
 #define USBD_HID_EP_INTOUT          1
@@ -376,7 +375,7 @@
 
 
 /* USB Device Calculations ---------------------------------------------------*/
-
+#define MAX(x, y)                (((x) < (y)) ? (y) : (x))
 #define USBD_IF_NUM                (USBD_HID_ENABLE+USBD_MSC_ENABLE+(USBD_ADC_ENABLE*2)+(USBD_CDC_ACM_ENABLE*2)+USBD_CLS_ENABLE)
 #define USBD_MULTI_IF              (USBD_CDC_ACM_ENABLE*(USBD_HID_ENABLE|USBD_MSC_ENABLE|USBD_ADC_ENABLE))
 #define USBD_EP_NUM_CALC0           MAX((USBD_HID_ENABLE    *(USBD_HID_EP_INTIN     )), (USBD_HID_ENABLE    *(USBD_HID_EP_INTOUT!=0)*(USBD_HID_EP_INTOUT)))
@@ -386,7 +385,7 @@
 #define USBD_EP_NUM_CALC4           MAX(USBD_EP_NUM_CALC0, USBD_EP_NUM_CALC1)
 #define USBD_EP_NUM_CALC5           MAX(USBD_EP_NUM_CALC2, USBD_EP_NUM_CALC3)
 #define USBD_EP_NUM_CALC6           MAX(USBD_EP_NUM_CALC4, USBD_EP_NUM_CALC5)
-#define USBD_EP_NUM                	(USBD_EP_NUM_CALC6)
+#define USBD_EP_NUM                (USBD_EP_NUM_CALC6)
 
 #if    (USBD_HID_ENABLE)
 #if    (USBD_MSC_ENABLE)
