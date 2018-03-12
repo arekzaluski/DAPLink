@@ -66,6 +66,7 @@ const U8 usbd_max_packet0 = USBD_MAX_PACKET0;
 
 #if    (USBD_HID_ENABLE)
 const U8 usbd_hid_if_num = USBD_HID_IF_NUM;
+const U8 usbd_webusb_if_num = USBD_WEBUSB_IF_NUM;
 const U8 usbd_hid_ep_intin = USBD_HID_EP_INTIN;
 const U8 usbd_hid_ep_intout = USBD_HID_EP_INTOUT;
 const U16 usbd_hid_interval[2]  = {USBD_HID_INTERVAL, USBD_HID_HS_INTERVAL};
@@ -1830,6 +1831,18 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
   WBVAL(USBD_HID_HS_WMAXPACKETSIZE),    /* wMaxPacketSize */                                                \
   USBD_HID_HS_BINTERVAL,                /* bInterval */
 
+#define WEBUSB_DESC                                                                                    \
+  /* Interface, Alternate Setting 0, VENDOR_SPECIFIC Class */                                               \
+  USB_INTERFACE_DESC_SIZE,              /* bLength */                                                       \
+  USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */                                               \
+  USBD_WEBUSB_IF_NUM,                	/* bInterfaceNumber */                                              \
+  0x00,                                 /* bAlternateSetting */                                             \
+  0x00,       							/* bNumEndpoints */                                                 \
+  USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceClass */                                               \
+  USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceSubClass */                                            \
+  HID_PROTOCOL_NONE,                    /* bInterfaceProtocol */                                            \
+  USBD_WEBUSB_IF_STR_NUM,               /* iInterface */
+
 #define MSC_DESC                                                                                            \
 /* Interface, Alternate Setting 0, MSC Class */                                                             \
   USB_INTERFACE_DESC_SIZE,              /* bLength */                                                       \
@@ -2170,6 +2183,10 @@ const U8 USBD_ConfigDescriptor[] = {
 #endif
 #endif
 
+#if (USBD_WEBUSB_ENABLE)
+    WEBUSB_DESC
+#endif
+
 #if (USBD_CDC_ACM_ENABLE)
 #if (USBD_MULTI_IF)
     CDC_ACM_DESC_IAD(USBD_CDC_ACM_CIF_NUM, 2)
@@ -2230,6 +2247,10 @@ const U8 USBD_ConfigDescriptor_HS[] = {
 #endif
 #endif
 
+#if (USBD_WEBUSB_ENABLE)
+    WEBUSB_DESC
+#endif
+
 #if (USBD_CDC_ACM_ENABLE)
 #if (USBD_MULTI_IF)
     CDC_ACM_DESC_IAD(USBD_CDC_ACM_CIF_NUM, 2)
@@ -2286,6 +2307,10 @@ const U8 USBD_OtherSpeedConfigDescriptor[] = {
 #endif
 #endif
 
+#if (USBD_WEBUSB_ENABLE)
+    WEBUSB_DESC
+#endif
+
 #if (USBD_MSC_ENABLE)
     MSC_DESC
     MSC_EP_HS
@@ -2335,6 +2360,10 @@ const U8 USBD_OtherSpeedConfigDescriptor_HS[] = {
 #else
     HID_EP
 #endif
+#endif
+
+#if (USBD_HID_WEBUSB_ENABLE)
+    WEBUSB_DESC
 #endif
 
 #if (USBD_MSC_ENABLE)
@@ -2431,7 +2460,7 @@ const U8 USBD_WebUSBAllowedOriginsHeader[] = {
 #if (1)
     (WEBUSB_FUNCTION_SUBSET_HEADER_SIZE+1), /* bLength */
     WEBUSB_FUNCTION_SUBSET_HEADER_TYPE,     /* bDescriptorType */
-    USBD_HID_IF_NUM,                     /* bFirstInterfaceNumber */
+    USBD_WEBUSB_IF_NUM,                     /* bFirstInterfaceNumber */
     0x01,                                   /* iOrigin */
 #endif
 };
