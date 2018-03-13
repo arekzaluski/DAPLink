@@ -1521,7 +1521,7 @@ void USBD_RTX_TaskInit(void)
 #define USBD_WTOTALLENGTH                 (USB_CONFIGUARTION_DESC_SIZE +                 \
                                            USBD_CDC_ACM_DESC_LEN * USBD_CDC_ACM_ENABLE + \
                                            USBD_HID_DESC_LEN     * USBD_HID_ENABLE     + \
-                                           (USB_INTERFACE_DESC_SIZE + (USB_ENDPOINT_DESC_SIZE*(1+(USBD_HID_EP_INTOUT != 0)))) * USBD_WEBUSB_ENABLE + \
+                                           USB_INTERFACE_DESC_SIZE * USBD_WEBUSB_ENABLE + \
                                            USBD_MSC_DESC_LEN     * USBD_MSC_ENABLE)
 
 /*------------------------------------------------------------------------------
@@ -1840,7 +1840,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
   0x00,                                 /* bAlternateSetting */                                             \
   0x00,       							/* bNumEndpoints */                                                 \
   USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceClass */                                               \
-  USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceSubClass */                                            \
+  HID_SUBCLASS_NONE,     				/* bInterfaceSubClass */                                            \
   HID_PROTOCOL_NONE,                    /* bInterfaceProtocol */                                            \
   USBD_WEBUSB_IF_STR_NUM,               /* iInterface */
 
@@ -2363,7 +2363,7 @@ const U8 USBD_OtherSpeedConfigDescriptor_HS[] = {
 #endif
 #endif
 
-#if (USBD_HID_WEBUSB_ENABLE)
+#if (USBD_WEBUSB_ENABLE)
     WEBUSB_DESC
 #endif
 
