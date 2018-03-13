@@ -1521,6 +1521,7 @@ void USBD_RTX_TaskInit(void)
 #define USBD_WTOTALLENGTH                 (USB_CONFIGUARTION_DESC_SIZE +                 \
                                            USBD_CDC_ACM_DESC_LEN * USBD_CDC_ACM_ENABLE + \
                                            USBD_HID_DESC_LEN     * USBD_HID_ENABLE     + \
+                                           (USB_INTERFACE_DESC_SIZE + (USB_ENDPOINT_DESC_SIZE*(1+(USBD_HID_EP_INTOUT != 0)))) * USBD_WEBUSB_ENABLE + \
                                            USBD_MSC_DESC_LEN     * USBD_MSC_ENABLE)
 
 /*------------------------------------------------------------------------------
