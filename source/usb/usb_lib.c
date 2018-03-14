@@ -66,7 +66,7 @@ const U8 usbd_max_packet0 = USBD_MAX_PACKET0;
 
 #if    (USBD_HID_ENABLE)
 const U8 usbd_hid_if_num = USBD_HID_IF_NUM;
-const U8 usbd_hid_webusb_if_num = USBD_HID_WEBUSB_IF_NUM;
+const U8 usbd_webusb_if_num = USBD_WEBUSB_IF_NUM;
 const U8 usbd_hid_ep_intin = USBD_HID_EP_INTIN;
 const U8 usbd_hid_ep_intout = USBD_HID_EP_INTOUT;
 const U16 usbd_hid_interval[2]  = {USBD_HID_INTERVAL, USBD_HID_HS_INTERVAL};
@@ -1521,7 +1521,7 @@ void USBD_RTX_TaskInit(void)
 #define USBD_WTOTALLENGTH                 (USB_CONFIGUARTION_DESC_SIZE +                 \
                                            USBD_CDC_ACM_DESC_LEN * USBD_CDC_ACM_ENABLE + \
                                            USBD_HID_DESC_LEN     * USBD_HID_ENABLE     + \
-                                           (USB_INTERFACE_DESC_SIZE) * USBD_HID_WEBUSB_ENABLE + \
+                                           (USB_INTERFACE_DESC_SIZE) * USBD_WEBUSB_ENABLE + \
                                            USBD_MSC_DESC_LEN     * USBD_MSC_ENABLE)
 
 /*------------------------------------------------------------------------------
@@ -1780,17 +1780,17 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
   HID_REPORT_DESCRIPTOR_TYPE,           /* bDescriptorType */                                               \
   WBVAL(USB_HID_REPORT_DESC_SIZE),      /* wDescriptorLength */
 
-#define HID_WEBUSB_DESC                                                                                            \
+#define WEBUSB_DESC                                                                                            \
   /* Interface, Alternate Setting 0, VENDOR_SPECIFIC Class */                                                           \
   USB_INTERFACE_DESC_SIZE,              /* bLength */                                                       \
   USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */                                               \
-  USBD_HID_WEBUSB_IF_NUM,                /* bInterfaceNumber */                                              \
+  USBD_WEBUSB_IF_NUM,                /* bInterfaceNumber */                                              \
   0x00,                                 /* bAlternateSetting */                                             \
   0x00,                                 /* bNumEndpoints */                                                 \
   USB_DEVICE_CLASS_VENDOR_SPECIFIC,     /* bInterfaceClass */                                               \
   USB_DEVICE_CLASS_HUMAN_INTERFACE,     /* bInterfaceSubClass */                                            \
   HID_PROTOCOL_NONE,                    /* bInterfaceProtocol */                                            \
-  USBD_HID_WEBUSB_IF_STR_NUM,                  /* iInterface */                                                    \
+  USBD_WEBUSB_IF_STR_NUM,                  /* iInterface */                                                    \
 
 #define HID_EP                          /* HID Endpoint for Low-speed/Full-speed */                         \
 /* Endpoint, HID Interrupt In */                                                                            \
@@ -2194,8 +2194,8 @@ const U8 USBD_ConfigDescriptor[] = {
 #endif
 #endif
 
-#if (USBD_HID_WEBUSB_ENABLE)
-    HID_WEBUSB_DESC
+#if (USBD_WEBUSB_ENABLE)
+    WEBUSB_DESC
 #endif
 
     /* Terminator */                                                                                            \
@@ -2248,8 +2248,8 @@ const U8 USBD_ConfigDescriptor_HS[] = {
 #endif
 #endif
 
-#if (USBD_HID_WEBUSB_ENABLE)
-HID_WEBUSB_DESC
+#if (USBD_WEBUSB_ENABLE)
+WEBUSB_DESC
 #endif
 
 #if (USBD_CDC_ACM_ENABLE)
@@ -2308,8 +2308,8 @@ const U8 USBD_OtherSpeedConfigDescriptor[] = {
 #endif
 #endif
 
-#if (USBD_HID_WEBUSB_ENABLE)
-HID_WEBUSB_DESC
+#if (USBD_WEBUSB_ENABLE)
+WEBUSB_DESC
 #endif
 
 #if (USBD_MSC_ENABLE)
@@ -2363,8 +2363,8 @@ const U8 USBD_OtherSpeedConfigDescriptor_HS[] = {
 #endif
 #endif
 
-#if (USBD_HID_WEBUSB_ENABLE)
-HID_WEBUSB_DESC
+#if (USBD_WEBUSB_ENABLE)
+WEBUSB_DESC
 #endif
 
 #if (USBD_MSC_ENABLE)
@@ -2412,8 +2412,8 @@ const struct {
 #if (USBD_HID_ENABLE)
     USBD_STR_DEF(HID_STRDESC);
 #endif
-#if (USBD_HID_WEBUSB_ENABLE)
-		USBD_STR_DEF(HID_WEBUSB_STRDESC);
+#if (USBD_WEBUSB_ENABLE)
+		USBD_STR_DEF(WEBUSB_STRDESC);
 #endif
 #if (USBD_MSC_ENABLE)
     USBD_STR_DEF(MSC_STRDESC);
@@ -2438,8 +2438,8 @@ const struct {
 #if (USBD_HID_ENABLE)
     USBD_STR_VAL(HID_STRDESC),
 #endif
-#if (USBD_HID_WEBUSB_ENABLE)
-		USBD_STR_VAL(HID_WEBUSB_STRDESC),
+#if (USBD_WEBUSB_ENABLE)
+		USBD_STR_VAL(WEBUSB_STRDESC),
 #endif
 #if (USBD_MSC_ENABLE)
     USBD_STR_VAL(MSC_STRDESC),

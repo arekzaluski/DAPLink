@@ -265,8 +265,9 @@ void USBD_HID_EP_INTIN_Event(U32 event)
         }
     }
 
-    // Check if data needs to be sent
-    if (DataOutToSendLen || DataOutEndWithShortPacket) {
+    /* Check if data needs to be sent                                           */
+    if (DataOutToSendLen ||
+            DataOutEndWithShortPacket) {     /* If sending is in progress          */
         bytes_to_send = DataOutToSendLen - DataOutSentLen;
 
         if (bytes_to_send > usbd_hid_maxpacketsize[USBD_HighSpeed]) {
@@ -274,7 +275,6 @@ void USBD_HID_EP_INTIN_Event(U32 event)
         }
 
         USBD_WriteEP(usbd_hid_ep_intin | 0x80, ptrDataOut, bytes_to_send);
-
         ptrDataOut     += bytes_to_send;
         DataOutSentLen += bytes_to_send;
 
@@ -305,8 +305,7 @@ void USBD_HID_EP_INTOUT_Event(U32 event)
         DataInReceLen = 0;
     }
 
-    bytes_rece = USBD_ReadEP(usbd_hid_ep_intout, ptrDataIn, DataInReceMax - DataInReceLen);
-
+    bytes_rece      = USBD_ReadEP(usbd_hid_ep_intout, ptrDataIn, DataInReceMax - DataInReceLen);
     ptrDataIn      += bytes_rece;
     DataInReceLen  += bytes_rece;
 
@@ -366,6 +365,7 @@ void USBD_HID_EP_INT_Event(U32 event)
         USBD_HID_EP_INTOUT_Event(event);
     }
 }
+
 
 /*
  *  USB Device HID SOF Handler (handles report timings: polling and idle times)
@@ -481,24 +481,11 @@ __task void USBD_RTX_HID_EP_INTIN_Event(void)
 
 __task void USBD_RTX_HID_EP_INTOUT_Event(void)
 {
-
     for (;;) {
         usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
 
         if (usbd_os_evt_get() & USBD_EVT_OUT) {
             USBD_HID_EP_INTOUT_Event(0);
-        }
-    }
-}
-
-__task void USBD_RTX_HID_WEBUSB_EP_INTOUT_Event(void)
-{
-
-    for (;;) {
-        usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
-
-        if (usbd_os_evt_get() & USBD_EVT_OUT) {
-            USBD_HID_EP_INTOUT_Event(1);
         }
     }
 }
@@ -512,13 +499,11 @@ __task void USBD_RTX_HID_WEBUSB_EP_INTOUT_Event(void)
 
 __task void USBD_RTX_HID_EP_INT_Event(void)
 {
-
     for (;;) {
         usbd_os_evt_wait_or(0xFFFF, 0xFFFF);
         USBD_HID_EP_INT_Event(usbd_os_evt_get());
     }
 }
-
 #endif
 
 
