@@ -149,14 +149,8 @@
 
 #define USBD_HID_ENABLE             HID_ENDPOINT
 #define USBD_HID_WEBUSB_ENABLE      WEBUSB_HID_ENDPOINT
-#define USBD_HID_EP_INTIN           5
-#define USBD_HID_EP_INTOUT          5
-
-#if WEBUSB_HID_ENDPOINT
-// Pick a unique endpoint for the WEBUSB HID IF.
-#define USBD_HID_WEBUSB_EP_INTIN    1
-#define USBD_HID_WEBUSB_EP_INTOUT   1
-#endif
+#define USBD_HID_EP_INTIN           1
+#define USBD_HID_EP_INTOUT          1
 
 #define USBD_HID_EP_INTIN_STACK     0
 #define USBD_HID_WMAXPACKETSIZE     64
@@ -406,7 +400,7 @@
 #define USBD_EP_NUM_CALC4           MAX(USBD_EP_NUM_CALC0, USBD_EP_NUM_CALC1)
 #define USBD_EP_NUM_CALC5           MAX(USBD_EP_NUM_CALC2, USBD_EP_NUM_CALC3)
 #define USBD_EP_NUM_CALC6           MAX(USBD_EP_NUM_CALC4, USBD_EP_NUM_CALC5)
-#define USBD_EP_NUM                 MAX(USBD_EP_NUM_CALC6, USBD_HID_EP_INTIN*USBD_HID_WEBUSB_ENABLE)
+#define USBD_EP_NUM                 USBD_EP_NUM_CALC6
 
 #if    (USBD_HID_ENABLE)
 #if    (USBD_MSC_ENABLE)
