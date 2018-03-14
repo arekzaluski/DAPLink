@@ -429,23 +429,6 @@ BOOL USBD_EndPoint0_Out_HID_ReqToIF(void)
 }
 #endif  /* (USBD_HID_ENABLE) */
 
-#if    (USBD_HID_WEBUSB_ENABLE)
-
-#else
-BOOL USBD_ReqGetDescriptor_HID(U8 **pD, U32 *len)
-{
-    return (__FALSE);
-}
-BOOL USBD_EndPoint0_Setup_HID_ReqToIF(void)
-{
-    return (__FALSE);
-}
-BOOL USBD_EndPoint0_Out_HID_ReqToIF(void)
-{
-    return (__FALSE);
-}
-#endif  /* (USBD_HID_WEBUSB_ENABLE) */
-
 #if    (USBD_MSC_ENABLE)
 #ifdef __RTX
 #if    (USBD_MSC_EP_BULKIN != USBD_MSC_EP_BULKOUT)
@@ -2215,7 +2198,6 @@ const U8 USBD_ConfigDescriptor[] = {
     HID_WEBUSB_DESC
 #endif
 
-
     /* Terminator */                                                                                            \
     0                                     /* bLength */                                                       \
 };
@@ -2280,7 +2262,6 @@ HID_WEBUSB_DESC
     CDC_ACM_EP_IF1_HS
 #endif
 
-
     /* Terminator */                                                                                            \
     0                                     /* bLength */                                                       \
 };
@@ -2335,7 +2316,6 @@ HID_WEBUSB_DESC
     MSC_DESC
     MSC_EP_HS
 #endif
-
 
     /* Terminator */
     0                                     /* bLength */
