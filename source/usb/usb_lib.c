@@ -1781,7 +1781,7 @@ const U8 USBD_BinaryObjectStoreDescriptor[] = { 0 };
   WBVAL(USB_HID_REPORT_DESC_SIZE),      /* wDescriptorLength */
 
 #define WEBUSB_DESC                                                                                            \
-  /* Interface, Alternate Setting 0, VENDOR_SPECIFIC Class */                                                           \
+/* Interface, Alternate Setting 0, VENDOR_SPECIFIC Class */                                                           \
   USB_INTERFACE_DESC_SIZE,              /* bLength */                                                       \
   USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */                                               \
   USBD_WEBUSB_IF_NUM,                /* bInterfaceNumber */                                              \
