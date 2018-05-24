@@ -40,13 +40,6 @@ __weak BOOL USBD_EndPoint0_Setup_WebUSB_ReqToDevice(void)
     BOOL success = (__FALSE);
     if (USBD_SetupPacket.bRequest == usbd_webusb_vendor_code) {			/* vendor code correct? */
         switch (USBD_SetupPacket.wIndex) {
-            case WEBUSB_REQUEST_GET_ALLOWED_ORIGINS:
-                pD = (U8 *)USBD_WebUSBAllowedOriginsHeader;
-                USBD_EP0Data.pData = pD;
-                len = ((WEBUSB_ALLOWED_ORIGINS_HEADER_DESCRIPTOR *)pD)->wTotalLength;
-                success = (__TRUE);
-                break;
-
             case WEBUSB_REQUEST_GET_URL:
                 pD = (U8 *)USBD_WebUSBURLDescriptor;
                 if (USBD_SetupPacket.wValueL == 0) {

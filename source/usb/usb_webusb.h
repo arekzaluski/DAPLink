@@ -40,14 +40,6 @@ typedef __packed struct _WEBUSB_PLATFORM_CAPABILITY_DESCRIPTOR {
     U8  iLandingPage;
 } WEBUSB_PLATFORM_CAPABILITY_DESCRIPTOR;
 
-typedef __packed struct _WEBUSB_ALLOWED_ORIGINS_HEADER_DESCRIPTOR {
-    U8  bLength;
-    U8  bDescriptorType;
-    U16 wTotalLength;
-    U8  bNumConfigurations;
-    U8  iOrigin[];
-} WEBUSB_ALLOWED_ORIGINS_HEADER_DESCRIPTOR;
-
 typedef __packed struct _WEBUSB_URL_DESCRIPTOR {
     U8  bLength;
     U8  bDescriptorType;
@@ -56,7 +48,6 @@ typedef __packed struct _WEBUSB_URL_DESCRIPTOR {
 } WEBUSB_URL_DESCRIPTOR;
 
 /* WebUSB Request Codes */
-#define WEBUSB_REQUEST_GET_ALLOWED_ORIGINS      0x01
 #define WEBUSB_REQUEST_GET_URL                  0x02
 
 /* bScheme in URL descriptor */

@@ -2454,24 +2454,6 @@ const struct {
                                            WEBUSB_CONFIGURATION_SUBSET_HEADER_SIZE +\
                                            (WEBUSB_NUM_FUNCTIONS * (WEBUSB_FUNCTION_SUBSET_HEADER_SIZE + 1)))
 
-__weak \
-const U8 USBD_WebUSBAllowedOriginsHeader[] = {
-    WEBUSB_DESCRIPTOR_SET_HEADER_SIZE,      /* bLength */
-	WEBUSB_DESCRIPTOR_SET_HEADER_TYPE,      /* bDescriptorType */
-	WBVAL(WEBUSB_WTOTALLENGTH),             /* wTotalLength */
-    0x01,                                   /* bNumConfigurations */
-    WEBUSB_CONFIGURATION_SUBSET_HEADER_SIZE,/* bLength */
-    WEBUSB_CONFIGURATION_SUBSET_HEADER_TYPE,/* bDescriptorType */
-    0x01,                                   /* bConfigurationValue */
-    WEBUSB_NUM_FUNCTIONS,                   /* bNumFunctions */
-#if (1)
-    (WEBUSB_FUNCTION_SUBSET_HEADER_SIZE+1), /* bLength */
-    WEBUSB_FUNCTION_SUBSET_HEADER_TYPE,     /* bDescriptorType */
-    USBD_WEBUSB_IF_NUM,                     /* bFirstInterfaceNumber */
-    0x01,                                   /* iOrigin */
-#endif
-};
-
 /* WebUSB Create URL Descriptor */
 #define WEBUSB_URL_DEF(n)       \
   struct {                      \
@@ -2509,7 +2491,6 @@ struct {
 
 #else
 
-const U8 USBD_WebUSBAllowedOriginsHeader[] = { 0 };
 U8 USBD_WebUSBURLDescriptor[] = { 0 };
 
 BOOL USBD_EndPoint0_Setup_WebUSB_ReqToDevice(void)

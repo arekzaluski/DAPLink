@@ -121,7 +121,6 @@ extern const U8 USBD_OtherSpeedConfigDescriptor[];
 extern const U8 USBD_OtherSpeedConfigDescriptor_HS[];
 extern const U8 USBD_BinaryObjectStoreDescriptor[];
 extern const U8 USBD_StringDescriptor[];
-extern const U8 USBD_WebUSBAllowedOriginsHeader[];
 extern const U8 USBD_WebUSBURLDescriptor[];
 extern const U8 USBD_WinUSBDescriptorSetDescriptor[];
 
