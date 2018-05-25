@@ -32,6 +32,9 @@
 #include "info.h"
 #include "main.h"
 #include "uart.h"
+#include "file_stream.h"
+#include "settings.h"
+#include "target_reset.h"
 #include <string.h>
 
 //**************************************************************************************************
@@ -106,9 +109,26 @@ uint32_t DAP_ProcessVendorCommand(const uint8_t *request, uint8_t *response) {
         num += (write_len << 16) | 1;
         break;
     }
-    case ID_DAP_Vendor5:  break;
-    case ID_DAP_Vendor6:  break;
-    case ID_DAP_Vendor7:  break;
+    case ID_DAP_Vendor5: {
+        //msd open
+        *response = stream_open((stream_type_t)(*request));
+        num += (1 << 16) | 1;
+        break;
+    }
+    case ID_DAP_Vendor6: {
+        // msd close
+        *response = stream_close();
+        num += 1;
+        break;
+    }
+    case ID_DAP_Vendor7: {
+        // msd write
+        uint32_t write_len = *request;
+        request++;
+        *response = stream_write((uint8_t *)request, write_len);
+        num += ((write_len + 1) << 16) | 1;
+        break;
+    }
     case ID_DAP_Vendor8: {
         *response = 1;
         if (0 == *request) {
@@ -121,7 +141,15 @@ uint32_t DAP_ProcessVendorCommand(const uint8_t *request, uint8_t *response) {
         num += (1U << 16) | 1U; // increment request and response count each by 1
         break;
     }
-    case ID_DAP_Vendor9:  break;
+    case ID_DAP_Vendor9: {
+        // reset target
+        *response = 1;
+        if (!config_get_auto_rst()) {
+            target_set_state(RESET_RUN);
+        }
+        num += 1;
+        break;
+    }
     case ID_DAP_Vendor10: break;
     case ID_DAP_Vendor11: break;
     case ID_DAP_Vendor12: break;
